@@ -6,6 +6,8 @@ import (
 	"net/smtp"
 )
 
+const mimeHeader = "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n";
+
 type Mailer struct {
 	Server string
 	Port   int
@@ -58,12 +60,13 @@ func (m *Mailer) Send(from, to, subject, msg string) error {
 	if err != nil {
 		return err
 	}
-	if _, err := wc.Write([]byte(fmt.Sprintf("Subject: %s\n", subject))); err != nil {
+
+	sendBytes := fmt.Sprintf("From: %s\nTo: %s\nSubject: %s\n%s\n", from, to, subject, mimeHeader)
+	sendBytes = sendBytes + "<html><body>\n" + msg + "\n</body></html>\n"
+	if _, err := wc.Write([]byte(sendBytes)); err != nil {
 		return err
 	}
-	if _, err := wc.Write([]byte(msg)); err != nil {
-		return err
-	}
+
 	err = wc.Close()
 	if err != nil {
 		return err

@@ -28,7 +28,7 @@ func TestSend(t *testing.T) {
 
 	// setup a mailer
 	m := New(config.Server, config.Username, config.Password)
-	assert.Nil(t, m.Send(config.Username, config.To, config.Subject, config.Msg))
+	assert.Nil(t, m.Send(config.From, config.To, config.Subject, config.Msg))
 
 	// Check that the mail ended up in the target mailbox
 }
