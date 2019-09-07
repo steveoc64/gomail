@@ -1,0 +1,9 @@
+{
+	"Server": "mail.server.com",
+	"Username": "user@server.com",
+	"Password": "password",
+	"From": "user@server.com",
+	"To": "testaccount@otherserver.com",
+	"Subject": "library test",
+	"Msg": "this is a test case from the lib"
+}
