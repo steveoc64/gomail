@@ -6,7 +6,7 @@ import (
 	"net/smtp"
 )
 
-const mimeHeader = "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n";
+const mimeHeader = "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n"
 
 type Mailer struct {
 	Server string
@@ -24,7 +24,7 @@ func New(server string, user, pass string) *Mailer {
 	}
 }
 
-func (m *Mailer) Send(from, to, subject, msg string) error {
+func (m *Mailer) Send(from, to, subject, msg string, bcc []string) error {
 	// Connect to the remote SMTP server.
 	c, err := smtp.Dial(fmt.Sprintf("%s:%d", m.Server, m.Port))
 	if err != nil {
@@ -53,6 +53,13 @@ func (m *Mailer) Send(from, to, subject, msg string) error {
 	}
 	if err := c.Rcpt(to); err != nil {
 		return err
+	}
+
+	// Set the BCC list
+	for _, v := range bcc {
+		if err := c.Rcpt(v); err != nil {
+			return err
+		}
 	}
 
 	// Send the email subject and body.
