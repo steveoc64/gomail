@@ -5,5 +5,6 @@
 	"From": "user@server.com",
 	"To": "testaccount@otherserver.com",
 	"Subject": "library test",
-	"Msg": "this is a test case from the lib"
+	"Msg": "this is a test case from the lib",
+	"BCC": ["address1@testcases.com","address2@testcases.com"]
 }
